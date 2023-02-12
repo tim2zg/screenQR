@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/gen2brain/beeep"
 	"github.com/kbinani/screenshot"
 	"github.com/makiuchi-d/gozxing"
 	"github.com/makiuchi-d/gozxing/qrcode"
@@ -20,5 +21,12 @@ func main() {
 	qrReader := qrcode.NewQRCodeReader()
 	result, _ := qrReader.Decode(bmp, nil)
 
-	fmt.Println(result)
+	if result != nil {
+		fmt.Println(result.String())
+		err := beeep.Notify("QR Code", result.String(), "assets/qr.png")
+		if err != nil {
+			return
+		}
+
+	}
 }
