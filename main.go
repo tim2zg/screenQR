@@ -6,9 +6,15 @@ import (
 	"github.com/kbinani/screenshot"
 	"github.com/makiuchi-d/gozxing"
 	"github.com/makiuchi-d/gozxing/qrcode"
+	"golang.design/x/clipboard"
 )
 
 func main() {
+	err := clipboard.Init()
+	if err != nil {
+		panic(err)
+	}
+
 	captureDisplay, err := screenshot.CaptureDisplay(0) // capture primary display
 	if err != nil {
 		panic(err)
@@ -27,6 +33,6 @@ func main() {
 		if err != nil {
 			return
 		}
-
+		clipboard.Write(clipboard.FmtText, []byte(result.String()))
 	}
 }
